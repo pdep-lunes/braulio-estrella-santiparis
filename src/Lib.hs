@@ -1,9 +1,10 @@
 module Lib () where
 
 import Text.Show.Functions ()
-import Foreign (alignPtr)
 
-data Personaje = UnPersonaje {nombre :: String, poderBasico :: Personaje -> Personaje, superPoder :: Personaje -> Personaje, superPoderActivo :: Bool, vida :: Int} deriving (Show)
+type Poder = Personaje -> Personaje
+
+data Personaje = UnPersonaje {nombre :: String, poderBasico :: Poder, superPoder :: Poder, superPoderActivo :: Bool, vida :: Int} deriving (Show)
 
 type Partida = [Personaje]
 
@@ -39,8 +40,24 @@ lluviaDeTuercas tipoAtaque otroPersonaje
 granadaDeEspinas :: Int -> Personaje -> Personaje
 granadaDeEspinas radio contrincante
   | radio > 3 && vida contrincante < 800 = cambiarNombre (hacerDanio (desactivarSuperPoder contrincante) (vida contrincante)) " Espina estuvo aqui"
-  | radio > 3 = cambiarNombre contrincante " Espina estuvo aqui"
+  | radio > 3 = bolaEspinosa.cambiarNombre contrincante $ " Espina estuvo aqui"
   | otherwise = bolaEspinosa contrincante
 
-torretaCurativa :: Personaje -> Personaje
+torretaCurativa :: Poder
 torretaCurativa aliado = activarSuperPoder.curarVida aliado $ vida aliado
+
+estaEnLasUltimas :: Personaje -> Bool
+estaEnLasUltimas = (< 800).vida
+
+personajesEnLasUltimas :: Partida -> [String]
+personajesEnLasUltimas partida = map nombre.filter estaEnLasUltimas $ partida
+
+atacarConPoderEspecial :: Personaje -> Personaje -> Personaje
+atacarConPoderEspecial atacante objetivo 
+  | superPoderActivo atacante = poderBasico atacante.superPoder atacante $ objetivo
+  | otherwise = objetivo
+
+espina = UnPersonaje "Espina" bolaEspinosa (granadaDeEspinas 5) True 4800 :: Personaje
+pamela = UnPersonaje "Pamela" (lluviaDeTuercas "sanadoras") torretaCurativa False 9600 :: Personaje
+
+partida = [espina, pamela] :: Partida
