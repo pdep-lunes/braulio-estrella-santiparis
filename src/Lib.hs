@@ -16,5 +16,5 @@ lluviaDeTuercas tipoAtaque contraparte
 granadaDeEspinas :: Int -> Personaje -> Personaje
 granadaDeEspinas radio contrincante 
   | radio > 3 && vida contrincante < 800 = UnPersonaje (nombre contrincante ++ " Espina estuvo aqui") (poderBasico contrincante) (superPoder contrincante) False 0
-  | radio > 3 = UnPersonaje (nombre contrincante ++ " Espina estuvo aqui") (poderBasico contrincante) (superPoder contrincante) (superPoderActivo contrincante) (vida contrincante - 1000)
+  | radio > 3 = UnPersonaje (nombre contrincante ++ " Espina estuvo aqui") (poderBasico contrincante) (superPoder contrincante) (superPoderActivo contrincante) (vida contrincante)
   | otherwise = bolaEspinosa contrincante
