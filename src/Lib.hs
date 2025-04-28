@@ -44,7 +44,7 @@ granadaDeEspinas radio contrincante
   | radio > 3 = bolaEspinosa.cambiarNombre contrincante $ " Espina estuvo aqui"
   | otherwise = bolaEspinosa contrincante
 
-torretaCurativa :: Poder
+torretaCurativa :: Personaje -> Personaje
 torretaCurativa aliado = activarSuperPoder.curarVida aliado $ vida aliado
 
 estaEnLasUltimas :: Personaje -> Bool
