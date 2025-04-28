@@ -2,9 +2,11 @@ module Lib () where
 
 import Text.Show.Functions ()
 
-data Personaje = UnPersonaje {nombre :: String, poderBasico :: String, superPoder :: String, superPoderActivo :: Bool, vida :: Float}
+data Personaje = UnPersonaje {nombre :: String, poderBasico :: String, superPoder :: String, superPoderActivo :: Bool, vida :: Int}
 
-restarVida :: Float -> Float -> Float
+type Partida = [Personaje]
+
+restarVida :: Int -> Int -> Int
 restarVida vidaContrincante vidaARestar 
   | vidaARestar >= vidaContrincante = 0
   | otherwise = vidaContrincante - vidaARestar 
@@ -15,7 +17,7 @@ bolaEspinosa contrincante = UnPersonaje (nombre contrincante) (poderBasico contr
 lluviaDeTuercas :: String -> Personaje -> Personaje
 lluviaDeTuercas tipoAtaque otroPersonaje 
   | tipoAtaque == "sanadoras" = UnPersonaje (nombre otroPersonaje) (poderBasico otroPersonaje) (superPoder otroPersonaje) (superPoderActivo otroPersonaje) (vida otroPersonaje + 800)
-  | tipoAtaque == "daninas" = UnPersonaje (nombre otroPersonaje) (poderBasico otroPersonaje) (superPoder otroPersonaje) (superPoderActivo otroPersonaje) (vida otroPersonaje / 2)
+  | tipoAtaque == "daninas" = UnPersonaje (nombre otroPersonaje) (poderBasico otroPersonaje) (superPoder otroPersonaje) (superPoderActivo otroPersonaje) (div (vida otroPersonaje) 2)
   | otherwise = otroPersonaje
 
 granadaDeEspinas :: Int -> Personaje -> Personaje
