@@ -1,3 +1,4 @@
+{-# OPTIONS_GHC -Wno-unused-top-binds #-}
 module Lib () where
 
 import Text.Show.Functions ()
@@ -50,14 +51,18 @@ estaEnLasUltimas :: Personaje -> Bool
 estaEnLasUltimas = (< 800).vida
 
 personajesEnLasUltimas :: Partida -> [String]
-personajesEnLasUltimas partida = map nombre.filter estaEnLasUltimas $ partida
+personajesEnLasUltimas = map nombre.filter estaEnLasUltimas
 
 atacarConPoderEspecial :: Personaje -> Personaje -> Personaje
 atacarConPoderEspecial atacante objetivo 
   | superPoderActivo atacante = poderBasico atacante.superPoder atacante $ objetivo
   | otherwise = objetivo
 
-espina = UnPersonaje "Espina" bolaEspinosa (granadaDeEspinas 5) True 4800 :: Personaje
-pamela = UnPersonaje "Pamela" (lluviaDeTuercas "sanadoras") torretaCurativa False 9600 :: Personaje
+espina :: Personaje
+espina = UnPersonaje "Espina" bolaEspinosa (granadaDeEspinas 5) True 4800 
 
+pamela :: Personaje
+pamela = UnPersonaje "Pamela" (lluviaDeTuercas "sanadoras") torretaCurativa False 9600
+
+partida :: Partida
 partida = [espina, pamela] :: Partida
