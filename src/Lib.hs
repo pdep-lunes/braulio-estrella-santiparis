@@ -2,5 +2,7 @@ module Lib () where
 
 import Text.Show.Functions ()
 
-doble :: Int -> Int
-doble x = x * 2
+data Personaje = UnPersonaje {nombre :: String, poderBasico :: String, superPoder :: String, superPoderActivo :: Bool, vida :: Int}
+
+bolaEspinosa :: Personaje -> Personaje
+bolaEspinosa contrincante = UnPersonaje (nombre contrincante) (poderBasico contrincante) (superPoder contrincante) (superPoderActivo contrincante) (vida contrincante - 1000)
